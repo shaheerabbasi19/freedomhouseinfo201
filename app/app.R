@@ -32,7 +32,7 @@ server <- function(input, output) {
              "GDP Per Capita" = "gdp_pc",
              "Political Rights Score" = "pr",
              "Civil Liberties Score" = "cl",
-             "GDP" = "gdp") %>% sample_n(20) %>%tibble()
+             "GDP" = "gdp") %>% sample_n(10) %>%tibble()
   })
   
   output$page1 <- renderUI({
@@ -43,14 +43,14 @@ server <- function(input, output) {
                and how it is important to have access to freedom of speech.", 
                align = "left", height = 300, width = 500),
       
-      p("Prominent Political Scientists argued for most of the 20th century that a country becomes
-      a democracy after a certain amount of economic prosperity is achieved. The freedom index is a metric used to 
+      p(" The Freedom Index is a metric used to 
       measure the level of freedom enjoyed by individuals in a country. This index is calculated using a number of
       factors, including political rights, civil liberties, and economic freedom. Over time, the level of freedom enjoyed
       by individuals in different countries around the world has changed significantly. While some countries have become 
-      more democratic and free, others have become more authoritarian and oppressive. To better understand the 
-      relationship between democracy and economic prosperity, we use data from Freedom House that measures 
-      democratization across the world based on GDP per Capita data from 2006 to 2022. Additionally, we analyze the 
+      more democratic and free, others have become more authoritarian and oppressive."),
+      p("To better understand the relationship between democracy and economic prosperity, we use data from",
+        strong("Freedom House" ),
+        "that measures democratization across the world based on GDP per Capita data from 2006 to 2022. Additionally, we analyze the 
       relationship between regions and the average freedom index in those regions to determine if a country's location 
       is a significant factor in its freedom level. Finally, we assess countries classified as free and what 
       they have in common that allows them to have a higher freedom index. Through analyzing multiple nations' 
@@ -308,7 +308,7 @@ server <- function(input, output) {
   output$page3 <- renderUI({
     sidebarLayout(
       sidebarPanel(
-        radioButtons("graph", "What grpah?", 
+        radioButtons("graph", "Which graph?", 
                      list("Political Rights vs. Civil Liberty" = 1,
                           "Freedom vs. GDP per capita" = 4,
                           "Political Rights" = 2,
@@ -427,11 +427,11 @@ server <- function(input, output) {
          democratic style of government have a lower freedom index. This can be because
          of the strict policies of civil liberties as seen in North Korea and China where 
          more authoritarian forms of governance reign supreme."),
-      
        p(strong("Thirdly, "),
               "based on region, the countries which are surroundedby regions which have a higher freedom level also tend to have a higher freedom level.For example, the region of the Europe and Americas has more Free and Partially free than all other
-         regions and this could be because the west has more democracy than other regions. However we have
-         also noticed that for regions like Europe, Americas, Africa, Eurasia and the Middle East, the 
+         regions and this could be because the west has more democracy than other regions."), 
+      p(strong("However,"),
+        "we have also noticed that for regions like Europe, Americas, Africa, Eurasia and the Middle East, the 
          average total of freedom levels for the regions are dropping slightly which may be a concern. This 
          could also be a national security reason on why these averages are dropping as more governments are 
          more focused on privacy, especially in the tech world we are in now, and are making more policy changes
@@ -443,20 +443,23 @@ server <- function(input, output) {
       hr(),
       
       h2("Broader Implications of the Insight", align = "center"),
-      p("The insights gained from the charts have several broader implications for policymakers, academics, and the general public.
-           Firstly, the correlation between a higher freedom index and a higher GDP per capita suggests that increasing political 
+      p("The insights gained from the charts have several broader implications for policymakers, academics, and the general public."),
+      p(strong("Firstly, "),
+        "the correlation between a higher freedom index and a higher GDP per capita suggests that increasing political 
            freedoms and civil liberties can have a positive impact on a country's economic development. Therefore, policymakers can use 
-           this information to prioritize policies that promote democratic values and human rights.
-           
-           Secondly, the observation that countries with non-democratic styles of government tend to have lower freedom 
+           this information to prioritize policies that promote democratic values and human rights."),
+      p(strong("Secondly, "),
+        "the observation that countries with non-democratic styles of government tend to have lower freedom 
            indices highlights the importance of promoting democratic values and practices worldwide. By supporting 
            democratic institutions and civil society organizations, countries can help promote human rights and 
-           freedom around the world. Thirdly, the observation that the average freedom levels in certain regions 
+           freedom around the world."),
+      p(strong("Thirdly, "),
+        "the observation that the average freedom levels in certain regions 
            are dropping slightly raises concerns about the state of democracy and human rights in those regions. 
            Policymakers and civil society organizations can use this information to target their efforts towards 
-           promoting democracy and civil liberties in those regions.
-          
-          Finally, the observation that privacy concerns may be contributing to the drop in freedom levels 
+           promoting democracy and civil liberties in those regions."),
+      p(strong("Finally, "),
+        "the observation that privacy concerns may be contributing to the drop in freedom levels 
           highlights the need to balance national security concerns with civil liberties. Policymakers and 
           tech companies can use this information to design policies and products that protect privacy while also 
           promoting freedom and democracy. Overall, these insights have important implications for promoting 
@@ -470,23 +473,23 @@ server <- function(input, output) {
           down each question to points and sees if that country fuilfils that category 
           in order to receive a point in that category. While the research methodologies
           seem to be adminsitered correctly, there still might be biases involved that 
-          can be assumed by media representation. In terms of the quality of the data, 
-          the Freedom House has only null values for those countries which they cannot 
+          can be assumed by media representation."),
+      p("In terms of the quality of the data, the Freedom House has only null values for those countries which they cannot 
           get an accurate data of. For example, those viewing the visualizations may 
           encounter some GDP missing due to the lack of information from that country, which 
-          also could be a factor in the scorings of the country's freedom index. The group 
-          came up with some biases that we think plays a crucial role: 
+          also could be a factor in the scorings of the country's freedom index."),
+      p("Additionally, the group came up with some biases that we think plays a crucial role: 
           Freedom House Index is biased towards Western-style democracy, as it tends to measure 
           freedom based on a specific model of democracy that may not be appropriate for all countries and cultures. 
           the Index can be influenced by political biases, particularly when it comes to countries that are 
-          perceived as being allies or adversaries of the United States. The bias in the Freedom House Index can harm various 
-          population groups, particularly those in non-Western countries or countries with different cultural 
+          perceived as being allies or adversaries of the United States."),
+      p("The bias in the Freedom House Index can harm various population groups, particularly those in non-Western countries or countries with different cultural 
           and political traditions. For example, if the Index is biased towards Western-style democracy, 
           it may undervalue the level of freedom in countries with different forms of government, 
           potentially harming populations in those countries. Similarly, if the Index is influenced 
           by political biases, it could lead to unfair assessments of countries that are perceived 
           as adversaries of the United States, potentially harming populations in those countries as well (causing more
-          discrimination)"),
+          discrimination)."),
       hr(),
       
       h2("Future Ideas", align = "center"),
