@@ -305,9 +305,24 @@ server <- function(input, output) {
     }
   })
   
+  output$Yuanzu <- renderTable({
+    freedom %>% 
+      filter(year == input$time) %>% 
+      filter(country_territory == input$place) %>% 
+      select(country_territory, year, pr, cl, total, gdp_pc) %>%
+      rename("Country" = "country_territory", 
+             "Year" = "year",
+             "Political Rigts Index Score" = "pr",
+             "Civil Liberty Index Score" = "cl",
+             "Freedom Index Score" = "total",
+             "GDP per capita" = "gdp_pc") %>% tibble()
+  })
+  
+  
   output$page3 <- renderUI({
     sidebarLayout(
       sidebarPanel(
+        h3("Graph Inputs:"),
         radioButtons("graph", "Which graph?", 
                      list("Political Rights vs. Civil Liberty" = 1,
                           "Freedom vs. GDP per capita" = 4,
@@ -319,13 +334,26 @@ server <- function(input, output) {
           column(6, sliderInput("yr", "Which Year:",
                                 min = 2005,
                                 max = 2021,
-                                value = 1),),
+                                value = 1))),
+          br(),
+        h3("Table Inputs:"),
+          selectInput("place", "What country?", 
+                      unique(freedom$country_territory)),
           
+          
+          fluidRow(
+            column(6, sliderInput("time", "Which Year:",
+                                  min = 2005,
+                                  max = 2021,
+                                  value = 1),
         )
-      ),
+      )),
       mainPanel(
         plotOutput("plot1"),
-        textOutput("text1")
+        textOutput("text1"),
+        hr(),
+        br(),
+        tableOutput("Yuanzu")
       )
     )
   })
@@ -404,13 +432,11 @@ server <- function(input, output) {
   output$plotlast <- renderPlot({
     freedom_diff <- freedom %>%
       filter(year %in% c(2006, 2020)) %>%
-      spread(key = year, value = total) %>%
-      mutate(diff = `2020` - `2006`) %>%
-      summarise(country_territory, diff) %>%
+      mutate(diff = total - lag(total)) %>%
       drop_na()
     
-    ggplot(freedom_diff, aes(x = country_territory, y = diff)) +
-      geom_point(fill = "steelblue") +
+    ggplot(freedom_diff, aes(x = country_territory, y = diff, col = region)) +
+      geom_point() +
       ggtitle("Difference in Freedom Index Scores (2020-2006)") +
       xlab("Country") + ylab("Difference in Freedom Index Scores")
   })
@@ -474,6 +500,10 @@ server <- function(input, output) {
           in order to receive a point in that category. While the research methodologies
           seem to be adminsitered correctly, there still might be biases involved that 
           can be assumed by media representation."),
+      p("Freedom House labels countries in its data different from international standards used by the World Bank, IMF and other major institutions. 
+        As a result, combining other country related data is will result in some values being missing. To fix this, we first added ISO3 codes and manually fixed ISO3 codes that did not properly match. 
+        This fix to the data allowed for data from other datasets to be added. We then added GDP per Capita and GDP data from the World Bank. 
+        World Bank data first had to be pivoted longer and then added."),
       p("In terms of the quality of the data, the Freedom House has only null values for those countries which they cannot 
           get an accurate data of. For example, those viewing the visualizations may 
           encounter some GDP missing due to the lack of information from that country, which 
