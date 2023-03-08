@@ -72,10 +72,10 @@ server <- function(input, output) {
         "Dataset 2"),
       a(href = "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD", target = "_blank", 
         "Dataset 3"),
-      
-      br(),
-      h2("Research Questions", align = "center"),
       hr(),
+
+      h2("Research Questions", align = "center"),
+      br(),
       
       p("1) We hope to assess the relationship between democracy and economic prosperity. 
       We make this assessment using Freedom House data which measures democratization across the world based on 
@@ -90,11 +90,12 @@ server <- function(input, output) {
       
       p("We believe that these questions can help us find a pattern as to where the most freedom is found and
         what factors those countries with higher freedom index have that the lower freedom index countries don't."),
-      
-      br(),
+      hr(),
       
       h2("Definition of Values", align = "center"),
-      hr(),
+      
+      br(),
+  
       h5("Country: The name of the country"),
       h5("Region: The region of the country"), 
       h5("Year: The year the data was aggregated"), 
@@ -109,8 +110,10 @@ server <- function(input, output) {
       h5("GDP: The nation's gross domestic product"),
       h5("GDP Per Capita: country's economic output per person"),
       br(),
-      h2("Sample of Data from 2020", align = "center"),
       hr(),
+      h2("Sample of Data from 2020", align = "center"),
+      br(),
+
       tableOutput("table_intro"),
     )
   })
@@ -414,11 +417,6 @@ server <- function(input, output) {
   
   output$page5 <- renderUI({
     mainPanel(
-      tags$img(src = "https://imageio.forbes.com/specials-images/imageserve/622787564f26c2250a237581/A-yellow-light-bulb-floating-in-the-air-above-four-white-light-bulbs-resting-on-a/960x0.png?format=png&width=960", 
-               alt = "Image shows a lightbulb with the word insight written over it.", 
-               align = "left", height = 300, width = 500),
-      br(),
-      
       h2("Notable Insights", align = "center"),
       br(),
       p("Insights: There are a couple of insights that we gained from the charts we have just presented"),
