@@ -4,6 +4,8 @@ Project by: Hrudhai Umas, Shaheer Abbasi, Yuanzu Chen, Graydon Perry
 
 FINAL Slides: https://docs.google.com/presentation/d/1qVQGLUmvvPmyTMyRicTgjfSFq0Q1I3t-91YL7FXMie8/edit?usp=sharing
 
+FINAL Web APP: https://graydonperry.shinyapps.io/finalwebapp_V2/
+
 Motivation/Purpose
 
 The Freedom Index is a metric used to measure the level of freedom enjoyed by individuals in a country. This index is calculated using a number of factors, including political rights, civil liberties, and economic freedom. Over time, the level of freedom enjoyed by individuals in different countries around the world has changed significantly. While some countries have become more democratic and free, others have become more authoritarian and oppressive.
