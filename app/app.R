@@ -16,7 +16,7 @@ ui <- navbarPage("Freedom in the World",
                           uiOutput("page4")),
                  tabPanel("Conclusion",
                           uiOutput("page5")))
-                 
+
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
@@ -35,6 +35,8 @@ server <- function(input, output) {
              "GDP" = "gdp") %>% sample_n(10) %>%tibble()
   })
   
+  #Page 1 UI contains the intro image, motivation of project, where our data is from 
+  #Research questions, definition of variables, and a sample of the data!
   output$page1 <- renderUI({
     mainPanel(
       h2("Motivation/Purpose", align = "center"),
@@ -73,7 +75,7 @@ server <- function(input, output) {
       a(href = "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD", target = "_blank", 
         "Dataset 3"),
       hr(),
-
+      
       h2("Research Questions", align = "center"),
       br(),
       
@@ -95,7 +97,7 @@ server <- function(input, output) {
       h2("Definition of Values", align = "center"),
       
       br(),
-  
+      
       h5("Country: The name of the country"),
       h5("Region: The region of the country"), 
       h5("Year: The year the data was aggregated"), 
@@ -113,11 +115,11 @@ server <- function(input, output) {
       hr(),
       h2("Sample of Data from 2020", align = "center"),
       br(),
-
+      
       tableOutput("table_intro"),
     )
   })
-
+  
   #This table shows the change in average GDP per Capita in free, not free, and partially free countries by region
   #Plot w/ GDP changing by status and region
   output$gdp_plot <- renderPlot ({
@@ -130,7 +132,7 @@ server <- function(input, output) {
         ggplot(aes(x = year, y = avg_gdp_pc, color = status)) + 
         geom_point() + #points on graph
         geom_smooth(se = FALSE) + #trend line on graph
-        labs(x = "Year", y = "Average GDP Per Capita (logarithmic)", status = "Status",  #labelling graph
+        labs(x = "Year", y = "Average GDP Per Capita (logarithmic)", status = "Status",  #labeling graph
              caption = "F = Free, PF = Partially Free, NF = Not Free") +
         ggtitle("Average GDP Per Capita by Region Amongst Free, Partially Free, and Not Free Countries") #title
     }
@@ -235,7 +237,7 @@ server <- function(input, output) {
           It is interesting to see that partially free countries are getting wealthier than not free countries. Moreover, the gap in GDP per capita between free countries and other countries is closing.
           This result suggests that hope for democracy is strongest in Asia right now. As seen in the table below, freedom scores across the regions are not rising while they get wealthier.
           While the table is skewed because  advances in the freedom of individual countries are drowned out by the average, it does show that freedom is not decreasing in Asia."),
-
+        
         hr(),
         
         h4("Freedom Index Score and GDP Per Capita by Region between 2005 and 2021"),
@@ -335,19 +337,19 @@ server <- function(input, output) {
                                 min = 2005,
                                 max = 2021,
                                 value = 1))),
-          br(),
+        br(),
         h3("Table Inputs:"),
-          selectInput("place", "What country?", 
-                      unique(freedom$country_territory)),
-          
-          
-          fluidRow(
-            column(6, sliderInput("time", "Which Year:",
-                                  min = 2005,
-                                  max = 2021,
-                                  value = 1),
-        )
-      )),
+        selectInput("place", "What country?", 
+                    unique(freedom$country_territory)),
+        
+        
+        fluidRow(
+          column(6, sliderInput("time", "Which Year:",
+                                min = 2005,
+                                max = 2021,
+                                value = 1),
+          )
+        )),
       mainPanel(
         plotOutput("plot1"),
         textOutput("text1"),
@@ -405,7 +407,7 @@ server <- function(input, output) {
                 p("Based on the scatterplot, we can see that there are marked differences between the different regions as it pertains to their Freedom Index score,
                   indicating that internal measures like civil rights & political liberties don't just differ on a country basis, they differ based on the region a 
                   country is located in."),
-
+                
                 p("Intuitively, this makes sense, since countries in the same location, although often having conflict due to things like shared interest or even something
                   as simple as general proxiity, generally share the same core values and interests. There are a variety of reasons we could postulate as to why this is the case
                   (inter-country trade making an overall region more wealthy, diffusion of values/interests between close countries, etc.), but we can see from the scatterplot
@@ -426,35 +428,44 @@ server <- function(input, output) {
                   "alost completely overlap, meaning that on a region-scale, they have ",
                   em("very"),
                   "similar Freedom Index scores.")
-              ))
+      ))
   })
   
+  #Plot contains the final findings and insights which shows the 
+  #difference in freedom index scores from the year 2021 to 2005!
   output$plotlast <- renderPlot({
     freedom_diff <- freedom %>%
-      filter(year %in% c(2006, 2020)) %>%
+      filter(year %in% c(2005, 2021)) %>%
       mutate(diff = total - lag(total)) %>%
       drop_na()
     
     ggplot(freedom_diff, aes(x = country_territory, y = diff, col = region)) +
       geom_point() +
-      ggtitle("Difference in Freedom Index Scores (2020-2006)") +
-      xlab("Country") + ylab("Difference in Freedom Index Scores")
+      geom_smooth(method = "METHOD") + 
+      ggtitle("Difference in Freedom Index Scores (2021-2005)") +
+      xlab("Country") + ylab("Difference in Freedom Index Scores") +
+      theme(axis.text.x = element_blank(), axis.ticks.x = element_blank() )
   })
   
+  #Page 5 UI contains the conclusion of our final insights, chart that demonstrates
+  #the difference in freedom index from 2005 to 2021, data quality/bias and
+  #contains the future plan for the project!
   output$page5 <- renderUI({
     mainPanel(
       h2("Notable Insights", align = "center"),
       br(),
       p("Insights: There are a couple of insights that we gained from the charts we have just presented"),
-       p(strong("First, "),
-       "countries that had a higer freedom index tended to have a higher GDP per capita. "),
-       p(strong("Second, "),
-         "another insight we see from our graphs is that those countries who do not use the
+      p(strong("First, "),
+        "countries that had a higer freedom index tended to have a higher GDP per capita. However, A country getting richer 
+         does not perfectly correlate with it getting freerer. "),
+      p(strong("Second, "),
+        "another insight we see from our graphs is that those countries who do not use the
          democratic style of government have a lower freedom index. This can be because
          of the strict policies of civil liberties as seen in North Korea and China where 
          more authoritarian forms of governance reign supreme."),
-       p(strong("Thirdly, "),
-              "based on region, the countries which are surroundedby regions which have a higher freedom level also tend to have a higher freedom level.For example, the region of the Europe and Americas has more Free and Partially free than all other
+      p(strong("Thirdly, "),
+        "based on region, the countries which are surroundedby regions which have a higher freedom level also tend to have a higher freedom level.
+         For example, the region of the Europe and Americas has more Free and Partially free than all other
          regions and this could be because the west has more democracy than other regions."), 
       p(strong("However,"),
         "we have also noticed that for regions like Europe, Americas, Africa, Eurasia and the Middle East, the 
@@ -462,6 +473,11 @@ server <- function(input, output) {
          could also be a national security reason on why these averages are dropping as more governments are 
          more focused on privacy, especially in the tech world we are in now, and are making more policy changes
          which may lower civil liberties score."),
+      p(strong("This"),
+        "graph below shows us the differnce in the freedom index from the years 2021 to 2005 and it helps us see
+        which overall region has gotten the most change in freedom index from those years. As mentioned in the above
+        insights, we believe that all of those factors play some role in why the difference in index scores are
+        what they are"),
       hr(),
       
       h2("Chart that Demonstrates the Pattern/Insight", align = "center"),
