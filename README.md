@@ -1,4 +1,4 @@
-# freedomhouseinfo201
+# Freedom House INFO 201 FINAL PROJECT
 
 
 Motivation/Purpose
