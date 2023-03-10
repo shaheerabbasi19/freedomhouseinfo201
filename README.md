@@ -2,9 +2,7 @@
 
 
 Motivation/Purpose
-Image shows the many 
-               fundamental freedom of speech sources and a hand that shows the people of the country 
-               and how it is important to have access to freedom of speech.
+
 The Freedom Index is a metric used to measure the level of freedom enjoyed by individuals in a country. This index is calculated using a number of factors, including political rights, civil liberties, and economic freedom. Over time, the level of freedom enjoyed by individuals in different countries around the world has changed significantly. While some countries have become more democratic and free, others have become more authoritarian and oppressive.
 
 To better understand the relationship between democracy and economic prosperity, we use data from Freedom House that measures democratization across the world based on GDP per Capita data from 2006 to 2022. Additionally, we analyze the relationship between regions and the average freedom index in those regions to determine if a country's location is a significant factor in its freedom level. Finally, we assess countries classified as free and what they have in common that allows them to have a higher freedom index. Through analyzing multiple nations' freedom index, we aim to gain insight into the factors that contribute to a country's level of freedom.
