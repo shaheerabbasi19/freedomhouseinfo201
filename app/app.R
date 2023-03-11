@@ -35,6 +35,8 @@ server <- function(input, output) {
              "GDP" = "gdp") %>% sample_n(10) %>%tibble()
   })
   
+  # Hrudhai Umas
+  
   #Page 1 UI contains the intro image, motivation of project, where our data is from 
   #Research questions, definition of variables, and a sample of the data!
   output$page1 <- renderUI({
@@ -66,7 +68,8 @@ server <- function(input, output) {
       covering factors such as the country name, region, status, civil freedoms, 
       political rights, total freedom index, GDP, and GDP per Capita!"),
       
-      p("Below are the links to the orgins of the dataset. For reference, we then combined all of these datasets into one large csv file."),
+      p("Below are the links to the orgins of the dataset. 
+        For reference, we then combined all of these datasets into one large csv file."),
       
       a(href = "https://freedomhouse.org/report/freedom-world", target = "_blank", 
         "Dataset 1"),
@@ -149,7 +152,9 @@ server <- function(input, output) {
         ggtitle("Average GDP Per Capita by Region Amongst Free, Partially Free, and Not Free Countries")
       
     }
-  }) #Shaheer
+  }) 
+  
+  #Shaheer
   
   #Table that will go in the side panel of the econ page.
   #This table will show the GDP and Freedom Index score of every country. It ranks from from richest to poorest.
@@ -168,7 +173,7 @@ server <- function(input, output) {
       )%>% tibble()
     
     
-  }) #Shaheer
+  }) 
   
   #This Table Shows the Average GDP Per Capita and Freedom Index Score by Region in 2005 and 2021.
   output$gdp_freedom_region_table <- renderTable({
@@ -179,9 +184,9 @@ server <- function(input, output) {
                 "Average GDP Per Capita" = mean(gdp_pc)) %>%
       filter (year == 2005 | year == 2021) %>% tibble() #selecting years of interest
     
-  }) #Shaheer
+  }) 
   
-  #Shaheer
+ 
   #Code used to publish all economic page.
   output$economic <- renderUI({
     
@@ -208,12 +213,15 @@ server <- function(input, output) {
         
         h2("Motivation", align = "center"),
         br(),
-        p("Prominent Political Scientists argued for most of the 20th century that a country becomes a democracy after a certain amount of economic prosperity is achieved.
-           While theories abound for why, the primary argument is that economic growth leads to an empowered middle class and business interests which then seek to gain political power for their class. 
+        p("Prominent Political Scientists argued for most of the 20th century that a 
+        country becomes a democracy after a certain amount of economic prosperity is achieved.
+           While theories abound for why, the primary argument is that economic growth leads to an 
+           empowered middle class and business interests which then seek to 
+           gain political power for their class. 
           This was the argument used by the Clinton administration to admit the People's Republic of China into the World Trade Organization."),
         br(),
-        p("The graph above shows the average GDP Per Capita for Free, Not Free, and Partially Free countries in different regions from 2005 to 2021. It produces three key interesting findings.
-          When the GDP is logarithmic, it is to make changes in GDP Per Capita easier to see."),
+        p("The graph above shows the average GDP Per Capita for Free, Not Free, and Partially Free countries in different regions from 2005 to 2021. 
+        It produces three key interesting findings. When the GDP is logarithmic, it is to make changes in GDP Per Capita easier to see."),
         
         br(),
         hr(),
@@ -225,18 +233,24 @@ server <- function(input, output) {
           Eurasia seems to be an outlier in this trend because there are no free countries in Eurasia after 2008."),
         br(),
         p("This finding is reinforced by statistical evidence because the average GDP per capita amongst rich countries is ~$27,000,
-          compared to ~$6,500 for not free countries and ~$4,800 for partially free countries. This result is partially skewed by Europe because
-          most countries in Europe are free and Europe is a richer continent. The difference in wealth still holds, despite Europe, because the average GDP per Capita
+          compared to ~$6,500 for not free countries and ~$4,800 for partially free countries. 
+          This result is partially skewed by Europe because
+          most countries in Europe are free and Europe is a richer continent. 
+          The difference in wealth still holds, despite Europe, because the average GDP per Capita
           for free countries is ~$13,500."),
         
         hr(),
         
         h3("Finding 2: Freedom in Asia"),
         br(),
-        p("Asia is interesting because Asia has experienced immense economic growth from the 1990s till now. Based on the graph, free countries are much richer than not free or partially free countries in Asia.
-          It is interesting to see that partially free countries are getting wealthier than not free countries. Moreover, the gap in GDP per capita between free countries and other countries is closing.
-          This result suggests that hope for democracy is strongest in Asia right now. As seen in the table below, freedom scores across the regions are not rising while they get wealthier.
-          While the table is skewed because  advances in the freedom of individual countries are drowned out by the average, it does show that freedom is not decreasing in Asia."),
+        p("Asia is interesting because Asia has experienced immense economic growth from the 1990s till now. 
+        Based on the graph, free countries are much richer than not free or partially free countries in Asia.
+          It is interesting to see that partially free countries are getting wealthier than not free countries. 
+          Moreover, the gap in GDP per capita between free countries and other countries is closing.
+          This result suggests that hope for democracy is strongest in Asia right now. 
+          As seen in the table below, freedom scores across the regions are not rising while they get wealthier.
+          While the table is skewed because advances in the freedom of 
+          individual countries are drowned out by the average, it does show that freedom is not decreasing in Asia."),
         
         hr(),
         
@@ -248,10 +262,12 @@ server <- function(input, output) {
         
         h3("Finding 3: Trends in Growth"),
         br(),
-        p("As seen from the table, the entire world is getting richer. While this speed of this growth is spread unevenly across regions, it is also spread unevenly across free, not free, and partially free countries.
-          Most pronounced in the Middle East, the Americas, and Africa, free countries are getting richer faster than not free or partially free countries. The gap in wealth is expanding.
-          This is not true for all regions, mainly Asia.
-          The table also shows that freedom is not rising across the world. It is not a fair analysis to look at average freedom scores across regions to make this judgement because the assessment of freedom is context-specific. 
+        p("As seen from the table, the entire world is getting richer. 
+        While this speed of this growth is spread unevenly across regions, it is also spread unevenly across free, not free, and partially free countries.
+          Most pronounced in the Middle East, the Americas, and Africa, free countries are getting richer faster than not free or partially free countries. 
+          The gap in wealth is expanding.
+          This is not true for all regions, mainly Asia. The table also shows that freedom is not rising across the world. 
+          It is not a fair analysis to look at average freedom scores across regions to make this judgement because the assessment of freedom is context-specific. 
           Regardless, major world events in countries around the world show that democracy might be in the retreat."),
         
         br(),
@@ -262,7 +278,9 @@ server <- function(input, output) {
       ))
     
   })
+  
   # Yuanzu Chen
+  
   # These graphs show different data analysis based on what graph the user want to 
   # display by using the widget
   output$plot1 <- renderPlot({
@@ -386,11 +404,16 @@ server <- function(input, output) {
     )
   })
   
+  # Graydon Perry
+  
+  # defined freedom1 as a reactive variable to use for interactive plot
   freedom1 <- reactive({
     freedom %>%
-      filter(region %in% input$regions)
+      filter(region %in% input$r)
   })
   
+  # This plot is a scatterplot of average Freedom Index score, based on region, over the span
+  # of 2005 - 2021.
   output$plotgraydon <- renderPlot ({
     p1 <- freedom1() %>%
       filter(!is.na(year), !is.na(total)) %>%
@@ -402,7 +425,7 @@ server <- function(input, output) {
            x = "Years (2005 - 2021)",
            y = "Freedom Index") 
     
-    p2 <- p1 + geom_smooth(method = "lm")
+    p2 <- p1 + geom_smooth(method = "lm") # This shows a trend line for each of the regions
     
     if (input$cb) {
       p2
@@ -418,26 +441,33 @@ server <- function(input, output) {
       p("You can analyze the average Freedom Index for different regions. 
       Select the regions you are interested in. 
       To the right, you'll see a yearly scatterplot of the afformentioned data:",
+        # This widget allows users to turn trend lines on and off for the different regions
         checkboxInput(
           inputId = "cb",
           label = "Display Trend Lines:",
           value = FALSE),
+        # This widget allows users to see a scatterplot measuring association between Year and 
+        # Freedom Index score for the different regions
         checkboxGroupInput(
-          inputId = "regions",
+          inputId = "r",
           label = "Regions to show:",
           choices = c(unique(freedom$region)),
           selected = "Asia"),
       )),
+      # display the graph that's being interacted with
       mainPanel(plotOutput("plotgraydon"),
+                # display the findings from this graph
                 h3("Findings:", align = "center"),
-                p("Based on the scatterplot, we can see that there are marked differences between the different regions as it pertains to their Freedom Index score,
-                  indicating that internal measures like civil rights & political liberties don't just differ on a country basis, they differ based on the region a 
-                  country is located in."),
+                p("Based on the scatterplot, we can see that there are marked differences between the different regions 
+                as it pertains to their Freedom Index score, indicating that internal measures like civil rights & political liberties 
+                don't just differ on a country basis, they differ based on the region a country is located in."),
                 
-                p("Intuitively, this makes sense, since countries in the same location, although often having conflict due to things like shared interest or even something
-                  as simple as general proxiity, generally share the same core values and interests. There are a variety of reasons we could postulate as to why this is the case
-                  (inter-country trade making an overall region more wealthy, diffusion of values/interests between close countries, etc.), but we can see from the scatterplot
-                  that differences in freedom appear on a region-wide level."),
+                p("Intuitively, this makes sense, since countries in the same location, 
+                although often having conflict due to things like shared interest or even something
+                  as simple as general proxiity, generally share the same core values and interests. 
+                  There are a variety of reasons we could postulate as to why this is the case
+                  (inter-country trade making an overall region more wealthy, diffusion of values/interests between close countries, etc.), 
+                  but we can see from the scatterplot that differences in freedom appear on a region-wide level."),
                 
                 p("With that being said, let's describe what we see from the plot. Essentially, ", 
                   strong("Europe "),
@@ -456,6 +486,8 @@ server <- function(input, output) {
                   "similar Freedom Index scores.")
       ))
   })
+  
+  # Hrudhai Umas
   
   #Plot contains the final findings and insights which shows the 
   #difference in freedom index scores from the year 2021 to 2005!
@@ -542,8 +574,10 @@ server <- function(input, output) {
           in order to receive a point in that category. While the research methodologies
           seem to be adminsitered correctly, there still might be biases involved that 
           can be assumed by media representation."),
-      p("Freedom House labels countries in its data different from international standards used by the World Bank, IMF and other major institutions. 
-        As a result, combining other country related data is will result in some values being missing. To fix this, we first added ISO3 codes and manually fixed ISO3 codes that did not properly match. 
+      p("Freedom House labels countries in its data different from international standards used by the World Bank, 
+      IMF and other major institutions. 
+        As a result, combining other country related data is will result in some values being missing. 
+        To fix this, we first added ISO3 codes and manually fixed ISO3 codes that did not properly match. 
         This fix to the data allowed for data from other datasets to be added. We then added GDP per Capita and GDP data from the World Bank. 
         World Bank data first had to be pivoted longer and then added."),
       p("In terms of the quality of the data, the Freedom House has only null values for those countries which they cannot 
