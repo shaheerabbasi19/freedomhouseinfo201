@@ -262,51 +262,66 @@ server <- function(input, output) {
       ))
     
   })
-  
+  # Yuanzu Chen
+  # These graphs show different data analysis based on what graph the user want to 
+  # display by using the widget
   output$plot1 <- renderPlot({
-    if (input$graph == 1) {
+    if (input$graph == 1) { #If the user choose Political Rights vs. Civil Liberty on the widget,
+                            #this graph will be displayed
       freedom %>% filter (year == input$yr) %>% filter (status == "F") %>% 
         ggplot(aes(x = pr, y = cl)) + geom_point() + 
         geom_smooth(se = FALSE, method = "lm") + ggtitle ("Political Rights vs. Civil Liberty") +
         labs(x = "Political Rights Index Score", y = "Civil Liberty Index Score")
-    } else if(input$graph == 2) {
+    } else if(input$graph == 2) { #If the user choose Political Rights Distribution on the widget,
+                                  #this graph will be displayed
       freedom %>% filter (year == input$yr) %>% filter(status == "F") %>% 
         ggplot(aes(x = pr)) + geom_histogram() + 
-        ggtitle ("Political Rights Count") +
+        ggtitle ("Political Rights Distribution") +
         labs(x = "Political Rights Index Score", y = "counts")
-    } else if(input$graph == 3){
+    } else if(input$graph == 3){ #If the user choose Civil Liberty Distribution on the widget,
+                                 #this graph will be displayed
       freedom %>% filter (year == input$yr) %>% filter(status == "F") %>% 
         ggplot(aes(x = cl)) + geom_histogram() + 
-        ggtitle ("Civil Liberty Count") +
+        ggtitle ("Civil Liberty Distribution") +
         labs(x = "Civil Liberty Index Score", y = "counts")
-    } else {
+    } else { #If the user choose Freedom Index Score vs. GDP per capita on the widget,
+             #this graph will be displayed
       freedom %>% filter (year == input$yr) %>% filter(status == "F") %>% 
         ggplot(aes(x = total, y = gdp_pc)) + geom_point() + 
-        geom_smooth(se = FALSE, method = "lm") + ggtitle ("Freedom Index Score vs. GDP per capita") +
-        labs(x = "Freedom Index Score", y = "GDP per Capita")
+        geom_smooth(se = FALSE, method = "lm") + ggtitle ("Freedom Index Score vs. GDP per capita")
+        + labs(x = "Freedom Index Score", y = "GDP per Capita")
     }
   })
   
+  #The findings i got from each graphs will be displayed differently based on what graph the user  
+  #want to display by using the widget
   output$text1 <- renderText({
-    if(input$graph == 1) {
-      print("Based on the graphs from 2005 - 2021, it seems like that the political rights and civil 
-        liberty of those free countries tend to have linear relationship, which as the index score
-        of political rights gets higher, the index score of civil rights also gets higher. And also
-        as the index score of political rights gets lower, the index score of civil rights also 
-        gets lower.")
-    } else if(input$graph == 2) {
+    if(input$graph == 1) { #If the user choose Political Rights vs. Civil Liberty on the widget,
+                           #this finding will be displayed
+      print("Based on the graphs from 2005 - 2021, it seems like that the political rights and 
+        civil liberty of those free countries tend to have linear relationship, which as the 
+        index score of political rights gets higher, the index score of civil rights also gets 
+        higher. And also as the index score of political rights gets lower, the index score of 
+        civil rights also gets lower.")
+    } else if(input$graph == 2) { #If the user choose Political Rights Distribution on the widget,
+                                  #this finding will be displayed
       print("Based on the histograms from 2005 - 2021 of political rights count, the free countries
-            have the index score of political rights mostly higher than 25.")
-    } else if(input$graph == 3) {
+        have the index score of political rights mostly higher than 25.")
+    } else if(input$graph == 3) { #If the user choose Civil Liberty Distribution on the widget,
+                                  #this finding will be displayed
       print("Based on the histograms from 2005 - 2021 of civil liberty count, most of the free 
-            countries have the index score of civil liberty higher than 40.")
-    } else {
-      print("Based on the graphs from 2005 - 2021, although there do exist some outliers in the graph,
-            it seems most of the countries follow the pattern that as the index score of political 
-            freedom, the higher that the GDP per capita will be.")
+        countries have the index score of civil liberty higher than 40.")
+    } else { #If the user choose Freedom Index Score vs. GDP per capita on the widget,
+             #this finding will be displayed
+      print("Based on the graphs from 2005 - 2021, although there do exist some outliers in the
+        graph, it seems most of the countries follow the pattern that as the index score of 
+        political freedom, the higher that the GDP per capita will be.")
     }
   })
   
+  #Interactive Table
+  #These table will show the data for a country based on what the user choose on the widget,
+  #the user can also change the year of the data for that country through the widget.
   output$Yuanzu <- renderTable({
     freedom %>% 
       filter(year == input$time) %>% 
@@ -320,30 +335,38 @@ server <- function(input, output) {
              "GDP per capita" = "gdp_pc") %>% tibble()
   })
   
-  
+  #Code used to publish all political rights, civil liberty, GDP per capita for free countries
+  #and the interactive table.
   output$page3 <- renderUI({
     sidebarLayout(
       sidebarPanel(
         h3("Graph Inputs:"),
-        radioButtons("graph", "Which graph?", 
+        #This widget allows the user to choose what graph to be displayed on the main panel
+        radioButtons("graph", "Which graph to display?", 
                      list("Political Rights vs. Civil Liberty" = 1,
                           "Freedom vs. GDP per capita" = 4,
-                          "Political Rights" = 2,
-                          "Civil Liberty" = 3)),
+                          "Political Rights Distribution" = 2,
+                          "Civil Liberty Distribution" = 3)),
         
         
         fluidRow(
+          #This widget allows the user to change the data of the graph 
+          #displayed on the main panel by changing the year on this widget
           column(6, sliderInput("yr", "Which Year:",
                                 min = 2005,
                                 max = 2021,
                                 value = 1))),
         br(),
         h3("Table Inputs:"),
+        #This widget takes all the country name and allows the user to choose 
+        #which country's data to be displayed
         selectInput("place", "What country?", 
                     unique(freedom$country_territory)),
         
         
         fluidRow(
+          #This widget allows the user to choose the data of different year for 
+          #the selected country to be displayed
           column(6, sliderInput("time", "Which Year:",
                                 min = 2005,
                                 max = 2021,
@@ -351,10 +374,13 @@ server <- function(input, output) {
           )
         )),
       mainPanel(
+        #display the main graph of selected
         plotOutput("plot1"),
+        #finding that will be shown to the selected graph
         textOutput("text1"),
         hr(),
         br(),
+        #interactive table
         tableOutput("Yuanzu")
       )
     )
